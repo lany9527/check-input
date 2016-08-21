@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Webpack Project</title>
+  <script src="../node_modules/angular/angular.min.js"></script>
+  <script type="text/javascript" src="../node_modules/angular/angular.min.js"></script>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+  </meta></head>
+<body ng-app="check-input" ng-controller="myCtrl as Ctrl">
+<h1 class="caption">webpack input component</h1>
+<div class="row">
+  <div class="col-md-3 col-sm-3">
+    <div class="form-group-sm">
+      <!--<div email-input="">-->
+      <!--</div>-->
+      <form name="myForm" novalidate>
+        <div>
+          <input type="text" id="num" ng-model="Ctrl.value"
+                 name="num" email-input required>
+        </div>
+        <div>数字 model 变成 {{Ctrl.value}}</div>
+
+      </form>
+    </div>
+  </div>
+  <div class="col-md-9 col-sm-9">
+    <!--<input
+      type="text"
+      class="form-control"
+      placeholder="userEmail"
+      ng-model="$ctrl.mail"
+      aria-describedby="basic-addon2">-->
+  </div>
+</div>
+</body>
+</html>
