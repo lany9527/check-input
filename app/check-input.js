@@ -80,8 +80,9 @@ export function CheckInputDirective($parse, $timeout) {
     },
     //电话
     phone(viewValue, ngModel, options = {}){
-      if((/^1[3|4|5|7|8]\d{5}$/.test(viewValue))){
-        viewValue = viewValue.substr(0,3)+"-"+viewValue.substr(3,4)+"-";
+      if((/^1[3|4|5|7|8]\d{5}$/).test(viewValue)){
+        viewValue = viewValue.substr(0,3)+" "+viewValue.substr(3,4)+" ";
+        /*viewValue = viewValue.replace(/(\d\d\d)(\d\d\d\d)(\d\d\d\d)/, "$1-$2-$3");*/
       }
       /*if((/^1[3|4|5|7|8]\d{9}$/.test(viewValue))){
         viewValue = viewValue.substr(0,3)+"-"+viewValue.substr(3,4)+"-"+viewValue.substr(7,4);
@@ -99,6 +100,15 @@ export function CheckInputDirective($parse, $timeout) {
       ngModel._updateView(viewValue);
       console.log(viewValue);
       return viewValue;
+    },
+    //Credit card number
+    cardNumber(viewValue, ngModel, options){
+      if((/\d+/).test(viewValue)){
+        /*viewValue = viewValue.substr(0,3)+" "+viewValue.substr(3,4)+" ";*/
+        viewValue = viewValue.replace(/(\d\d\d\d)(\d\d\d\d)/, "$1-$2");
+      }
+      ngModel._updateView(viewValue);
+      console.log(viewValue);
     },
     '': viewValue=>viewValue,
     [void 0]: viewValue=>viewValue,

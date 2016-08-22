@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3a7e52c0d4975a42d5dc"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b6398bc37dc3266d0fbd"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -629,6 +629,7 @@
 	  ctrl.vInteger = '';
 	  ctrl.vUSDPrefix = '';
 	  ctrl.vNum = '';
+	  ctrl.cardNumber = '';
 	});
 
 	exports.default = MODULE_NAME;
@@ -795,22 +796,21 @@
 	    },
 
 	    //数字
-	    number: function (_number) {
-	      function number(_x, _x2, _x3) {
-	        return _number.apply(this, arguments);
-	      }
-
-	      number.toString = function () {
-	        return _number.toString();
-	      };
-
-	      return number;
-	    }(function (viewValue, ngModel, options) {
+	    number: function number(viewValue, ngModel, options) {
+	      if (viewValue == undefined) return '';
+	      var number = viewValue;
+	      /*if(isNaN(number)){
+	        let regExp = /^0+|[^0-9]+/g;
+	        ngModel._formatInput(number, regExp, '');
+	      }*/
 	      if (isNaN(number)) {
-	        number = '';
+	        number = number.replace(/\D+/g, '');
 	      }
+
+	      ngModel._updateView(number);
+	      console.log(number);
 	      return number;
-	    }),
+	    },
 
 	    //百分数
 	    percent: function percent(viewValue, ngModel, options) {},
@@ -827,20 +827,36 @@
 	      var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
 
 	      if (/^1[3|4|5|7|8]\d{5}$/.test(viewValue)) {
-	        viewValue = viewValue.substr(0, 3) + "-" + viewValue.substr(3, 4) + "-";
+	        /*viewValue = viewValue.substr(0,3)+" "+viewValue.substr(3,4)+" ";*/
+	        viewValue = viewValue.replace(/(\d\d\d)(\d\d\d\d)(\d\d\d\d)/, "$1-$2-$3");
 	      }
 	      /*if((/^1[3|4|5|7|8]\d{9}$/.test(viewValue))){
 	        viewValue = viewValue.substr(0,3)+"-"+viewValue.substr(3,4)+"-"+viewValue.substr(7,4);
 	      }*/
+	      ngModel._updateView(viewValue);
+	      console.log(viewValue);
 	      return viewValue;
 	    },
 
 	    //美元前缀
 	    usdPrefix: function usdPrefix(viewValue, ngModel, options) {
+	      var initValue = viewValue;
 	      if (/^[0-9]*[1-9][0-9]*$/.test(viewValue)) {
 	        viewValue = '$' + viewValue;
 	      }
+	      ngModel._updateView(viewValue);
+	      console.log(viewValue);
 	      return viewValue;
+	    },
+
+	    //Credit card number
+	    cardNumber: function cardNumber(viewValue, ngModel, options) {
+	      if (/^1[3|4|5|7|8]\d{5}$/.test(viewValue)) {
+	        /*viewValue = viewValue.substr(0,3)+" "+viewValue.substr(3,4)+" ";*/
+	        viewValue = viewValue.replace(/(\d\d\d)(\d\d\d)(\d\d\d\d)/, "$1-$2-$3");
+	      }
+	      ngModel._updateView(viewValue);
+	      console.log(viewValue);
 	    },
 
 	    '': function _(viewValue) {
@@ -859,6 +875,11 @@
 	      ngModel: '='
 	    },
 	    link: function link($scope, $ele, $attr, ngModelCtrl) {
+	      /*$ele.bind('keyup', formatInput);
+	        function formatInput(value, reg, replacement){
+	        value = value.replace(reg, replacement);
+	        return value;
+	      }*/
 
 	      var options = $attr.checkInputOpts ? $parse($attr.checkInputOpts)($scope) : {};
 
@@ -866,6 +887,7 @@
 	        $timeout(function () {
 	          ngModelCtrl.$viewValue = value;
 	          ngModelCtrl.$render();
+	          console.log("viewValue:" + value);
 	        });
 	      }
 
@@ -873,11 +895,13 @@
 	        $timeout(function () {
 	          ngModelCtrl.$modelValue = value;
 	          $scope.ngModel = value; // overwrites ngModel value
+	          console.log("modelValue:" + value);
 	        });
 	      }
 
 	      ngModelCtrl._updateView = updateView;
 	      ngModelCtrl._updateModel = updateModel;
+	      //ngModelCtrl._formatInput = formatInput;
 
 	      var parser = function parser(viewValue) {
 

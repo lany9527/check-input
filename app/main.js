@@ -14,6 +14,7 @@ angular.module(MODULE_NAME, [])
     ctrl.vInteger = '';
     ctrl.vUSDPrefix = '';
     ctrl.vNum = '';
+    ctrl.cardNumber = '';
   })
 ;
 
