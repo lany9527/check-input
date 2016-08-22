@@ -10,27 +10,75 @@
 <body ng-app="check-input" ng-controller="myCtrl as Ctrl">
 <h1 class="caption">webpack input component</h1>
 <div class="row">
-  <div class="col-md-3 col-sm-3">
+  <div class="col-md-3 col-sm-3 col-md-offset-1  col-sm-offset-1">
     <div class="form-group-sm">
       <!--<div email-input="">-->
       <!--</div>-->
       <form name="myForm" novalidate>
-        <div>
+        <!--<div>
           <input type="text" id="num" ng-model="Ctrl.value"
                  name="num" email-input required>
         </div>
-        <div>数字 model 变成 {{Ctrl.value}}</div>
+        <div>变成:: {{Ctrl.value}}</div>-->
+        <!--input-smart="float" input-smart-opts="{digits:4}"-->
+        <div>
+          <label>限制输入如小数位数：</label>
+          <input
+            class="form-control"
+            type="text"
+            ng-model="Ctrl.vFloat"
+            name="num"
+            check-input="float"
+            check-input-opts="{digits:4}"
+            required>
+          <p class="caption">变成:: {{Ctrl.vFloat}}</p>
+        </div>
+        <div>
+          <label>整数：</label>
+          <input
+            class="form-control"
+            type="text"
+            ng-model="Ctrl.vInteger"
+            name="num"
+            check-input="integer"
+            required>
+          <p class="caption">变成:: {{Ctrl.vInteger}}</p>
+        </div>
+        <div>
+          <label>添加美元前缀：</label>
+          <input
+            class="form-control"
+            type="text"
+            ng-model="Ctrl.vUSDPrefix"
+            check-input="usdPrefix"
+            required>
+          <p class="caption">变成:: {{Ctrl.vUSDPrefix}}</p>
+        </div>
+        <div>
+          <label>号码格式化：</label>
+          <input
+            class="form-control"
+            type="text"
+            ng-model="Ctrl.vPhone"
+            check-input="phone"
+            required>
+          <p class="caption">变成:: {{Ctrl.vPhone}}</p>
+        </div>
 
       </form>
     </div>
   </div>
-  <div class="col-md-9 col-sm-9">
-    <!--<input
-      type="text"
-      class="form-control"
-      placeholder="userEmail"
-      ng-model="$ctrl.mail"
-      aria-describedby="basic-addon2">-->
+  <div class="col-md-3 col-sm-3">
+    <div>
+      <label>数字：</label>
+      <input
+        class="form-control"
+        type="text"
+        ng-model="Ctrl.vNum"
+        check-input="number"
+        required>
+      <p class="caption">变成:: {{Ctrl.vNum}}</p>
+    </div>
   </div>
 </div>
 </body>
