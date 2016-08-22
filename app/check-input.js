@@ -58,9 +58,12 @@ export function CheckInputDirective($parse, $timeout) {
     number(viewValue, ngModel, options){
       if (viewValue == undefined) return '';
       var number = viewValue;
-      if(isNaN(number)){
+      /*if(isNaN(number)){
         let regExp = /^0+|[^0-9]+/g;
         ngModel._formatInput(number, regExp, '');
+      }*/
+      if (isNaN(number)){
+        number=number.replace(/\D+/g,'');
       }
 
       ngModel._updateView(number);
@@ -109,12 +112,12 @@ export function CheckInputDirective($parse, $timeout) {
       ngModel: '='
     },
     link: function ($scope, $ele, $attr, ngModelCtrl) {
-      $ele.bind('keyup', formatInput);
+      /*$ele.bind('keyup', formatInput);
 
       function formatInput(value, reg, replacement){
         value = value.replace(reg, replacement);
         return value;
-      }
+      }*/
 
       let options = $attr.checkInputOpts ? $parse($attr.checkInputOpts)($scope) : {};
 
@@ -136,7 +139,7 @@ export function CheckInputDirective($parse, $timeout) {
 
       ngModelCtrl._updateView = updateView;
       ngModelCtrl._updateModel = updateModel;
-      ngModelCtrl._formatInput = formatInput;
+      //ngModelCtrl._formatInput = formatInput;
 
       const parser = function (viewValue) {
 

@@ -64,7 +64,10 @@
             required>
           <p class="caption">变成:: {{Ctrl.vPhone}}</p>
         </div>
-
+        <h1>test</h1>
+        <input class="form-control" name="username" type="text" onkeyup="value=this.value.replace(/\D+/g,'')">
+        <hr>
+        <input class="form-control" name="username" type="text" onkeyup="value=value.replace(/[^\u4E00-\u9FA5]/g,'')">
       </form>
     </div>
   </div>
