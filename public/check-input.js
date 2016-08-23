@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b6398bc37dc3266d0fbd"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0473c1d77b795b981e92"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -819,6 +819,10 @@
 	    email: function email(viewValue, ngModel) {
 	      var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
 
+	      // /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/
+	      if (/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/.test(viewValue)) {
+	        viewValue = viewValue.substr(0, 3) + " " + viewValue.substr(3, 4) + " ";
+	      }
 	      return viewValue;
 	    },
 
@@ -827,8 +831,8 @@
 	      var options = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
 
 	      if (/^1[3|4|5|7|8]\d{5}$/.test(viewValue)) {
-	        /*viewValue = viewValue.substr(0,3)+" "+viewValue.substr(3,4)+" ";*/
-	        viewValue = viewValue.replace(/(\d\d\d)(\d\d\d\d)(\d\d\d\d)/, "$1-$2-$3");
+	        viewValue = viewValue.substr(0, 3) + " " + viewValue.substr(3, 4) + " ";
+	        /*viewValue = viewValue.replace(/(\d\d\d)(\d\d\d\d)(\d\d\d\d)/, "$1-$2-$3");*/
 	      }
 	      /*if((/^1[3|4|5|7|8]\d{9}$/.test(viewValue))){
 	        viewValue = viewValue.substr(0,3)+"-"+viewValue.substr(3,4)+"-"+viewValue.substr(7,4);
@@ -851,9 +855,9 @@
 
 	    //Credit card number
 	    cardNumber: function cardNumber(viewValue, ngModel, options) {
-	      if (/^1[3|4|5|7|8]\d{5}$/.test(viewValue)) {
+	      if (/\d+/.test(viewValue)) {
 	        /*viewValue = viewValue.substr(0,3)+" "+viewValue.substr(3,4)+" ";*/
-	        viewValue = viewValue.replace(/(\d\d\d)(\d\d\d)(\d\d\d\d)/, "$1-$2-$3");
+	        viewValue = viewValue.replace(/(\d\d\d\d)(\d\d\d\d)/, "$1-$2");
 	      }
 	      ngModel._updateView(viewValue);
 	      console.log(viewValue);
@@ -876,7 +880,7 @@
 	    },
 	    link: function link($scope, $ele, $attr, ngModelCtrl) {
 	      /*$ele.bind('keyup', formatInput);
-	        function formatInput(value, reg, replacement){
+	       function formatInput(value, reg, replacement){
 	        value = value.replace(reg, replacement);
 	        return value;
 	      }*/

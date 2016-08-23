@@ -1,8 +1,7 @@
-
 const MODULE_NAME = 'check-input';
 import angular from 'angular';
-import { EmailInputDirective } from './email-input/email-input';
-import { CheckInputDirective } from './check-input';
+import {EmailInputDirective} from './email-input/email-input';
+import {CheckInputDirective} from './check-input';
 
 
 angular.module(MODULE_NAME, [])
@@ -15,6 +14,7 @@ angular.module(MODULE_NAME, [])
     ctrl.vUSDPrefix = '';
     ctrl.vNum = '';
     ctrl.cardNumber = '';
+    ctrl.vMail = '';
   })
 ;
 

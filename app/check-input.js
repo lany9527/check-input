@@ -76,6 +76,10 @@ export function CheckInputDirective($parse, $timeout) {
     },
     //电子邮件
     email(viewValue, ngModel, options = {}){
+      // /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/
+      if ((/^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/).test(viewValue)){
+        viewValue = viewValue.substr(0,3)+"-"+viewValue.substr(3,4)+"-";
+      }
       return viewValue;
     },
     //电话
